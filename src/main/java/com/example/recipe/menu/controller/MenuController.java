@@ -1,14 +1,10 @@
 package com.example.recipe.menu.controller;
 
 import com.example.recipe.menu.domain.Menu;
-import com.example.recipe.menu.dto.MenusResponseDto;
+import com.example.recipe.menu.dto.MenuCreateRequestDto;
 import com.example.recipe.menu.service.MenuService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -24,6 +20,16 @@ public class MenuController {
     List<Menu> getMenus(){
         return menuService.getMenus();
     }
+
+    @PostMapping("/menus")
+    Menu createMenu(@RequestBody MenuCreateRequestDto menuCreateRequestDto) {
+        Menu requestMenu = new Menu();
+        requestMenu.setTitle(menuCreateRequestDto.getTitle());
+        requestMenu.setDescription(menuCreateRequestDto.getDescription());
+
+        return menuService.createMenu(requestMenu);
+    }
+
 }
 
 
