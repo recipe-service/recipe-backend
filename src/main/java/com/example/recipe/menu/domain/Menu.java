@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class Menu {
@@ -16,4 +18,6 @@ public class Menu {
 
     @Column(length = 1000)
     private String description;
+
+//    List<Step> steps;
 }

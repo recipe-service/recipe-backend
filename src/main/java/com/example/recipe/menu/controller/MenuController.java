@@ -3,6 +3,7 @@ package com.example.recipe.menu.controller;
 import com.example.recipe.menu.domain.Menu;
 import com.example.recipe.menu.dto.MenuCreateRequestDto;
 import com.example.recipe.menu.service.MenuService;
+import com.example.recipe.step.domain.Step;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public class MenuController {
         requestMenu.setDescription(menuCreateRequestDto.getDescription());
 
         return menuService.createMenu(requestMenu);
+    }
+
+    @GetMapping("/menus/{menuId}/steps")
+    List<Step> getSteps(@PathVariable Long menuId){
+        return menuService.getSteps(menuId);
     }
 
 }
