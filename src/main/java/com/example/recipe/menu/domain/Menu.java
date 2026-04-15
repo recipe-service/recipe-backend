@@ -1,9 +1,12 @@
 package com.example.recipe.menu.domain;
 
+import com.example.recipe.step.domain.Step;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.util.Lazy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,5 +22,6 @@ public class Menu {
     @Column(length = 1000)
     private String description;
 
-//    List<Step> steps;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    List<Step> steps = new ArrayList<>();
 }

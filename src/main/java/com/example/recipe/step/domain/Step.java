@@ -1,9 +1,8 @@
 package com.example.recipe.step.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.recipe.menu.domain.Menu;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +15,8 @@ public class Step {
 
     private String content;
 
-    private Long menuId;
+//    private Long menuId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    Menu menu;
 }

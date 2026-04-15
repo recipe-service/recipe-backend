@@ -17,11 +17,13 @@ public class MenuController {
         this.menuService = menuService;
     }
 
+    // 전체 메뉴 조회
     @GetMapping("/menus")
     List<Menu> getMenus(){
         return menuService.getMenus();
     }
 
+    // 메뉴 생성
     @PostMapping("/menus")
     Menu createMenu(@RequestBody MenuCreateRequestDto menuCreateRequestDto) {
         Menu requestMenu = new Menu();
@@ -31,11 +33,20 @@ public class MenuController {
         return menuService.createMenu(requestMenu);
     }
 
-    @GetMapping("/menus/{menuId}/steps")
-    List<Step> getSteps(@PathVariable Long menuId){
-        return menuService.getSteps(menuId);
-    }
+    // 메뉴의 steps 조회
+    // steps/menu/{menuId} -> StepController
+//    @GetMapping("/menus/{menuId}/steps")
+//    List<Step> getSteps(@PathVariable Long menuId){
+////        return menuService.getSteps(menuId);
+//        return menuService.getStepsV2(menuId);
+//    }
 
+    // 공부용
+    // (menuId를 넣으면) 각 step의 content을 리스트로 조회
+//    @GetMapping("/menus/{menuId}/steps/contents")
+//    List<String> getStepContents(@PathVariable Long menuId){
+//        return menuService.getStepContents(menuId);
+//    }
 }
 
 
