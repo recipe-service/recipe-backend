@@ -5,18 +5,18 @@ INSERT INTO menu (id, title, description) VALUES (3, '초코 스무디', '달콤
 ALTER TABLE menu ALTER COLUMN id RESTART WITH 4;
 
 -- 1번 메뉴: 아메리카노 조리 단계
-INSERT INTO step (content, menu_id) VALUES ('에스프레소 2샷을 추출합니다.', 1);
-INSERT INTO step (content, menu_id) VALUES ('컵에 얼음과 물을 가득 채웁니다.', 1);
-INSERT INTO step (content, menu_id) VALUES ('추출한 에스프레소를 물 위에 붓습니다.', 1);
+INSERT INTO step (content, step_order, menu_id) VALUES ('에스프레소 2샷을 추출합니다.', 1, 1);
+INSERT INTO step (content, step_order, menu_id) VALUES ('컵에 얼음과 물을 가득 채웁니다.', 2, 1);
+INSERT INTO step (content, step_order, menu_id) VALUES ('추출한 에스프레소를 물 위에 붓습니다.', 3, 1);
 
 -- 2번 메뉴: 카페라떼 조리 단계
-INSERT INTO step (content, menu_id) VALUES ('에스프레소 1샷을 추출합니다.', 2);
-INSERT INTO step (content, menu_id) VALUES ('우유를 스팀하여 부드러운 거품을 만듭니다.', 2);
-INSERT INTO step (content, menu_id) VALUES ('컵에 에스프레소와 스팀 우유를 섞습니다.', 2);
+INSERT INTO step (content, step_order, menu_id) VALUES ('에스프레소 1샷을 추출합니다.', 1, 2);
+INSERT INTO step (content, step_order, menu_id) VALUES ('우유를 스팀하여 부드러운 거품을 만듭니다.', 2, 2);
+INSERT INTO step (content, step_order, menu_id) VALUES ('컵에 에스프레소와 스팀 우유를 섞습니다.', 3, 2);
 
 -- 3번 메뉴: 초코 스무디 조리 단계
-INSERT INTO step (content, menu_id) VALUES ('믹서기에 얼음과 초코 파우더를 넣습니다.', 3);
-INSERT INTO step (content, menu_id) VALUES ('우유와 초코 시럽을 추가하고 블렌딩합니다.', 3);
-INSERT INTO step (content, menu_id) VALUES ('컵에 담고 기호에 따라 휘핑크림을 올립니다.', 3);
+INSERT INTO step (content, step_order, menu_id) VALUES ('믹서기에 얼음과 초코 파우더를 넣습니다.', 1, 3);
+INSERT INTO step (content, step_order, menu_id) VALUES ('우유와 초코 시럽을 추가하고 블렌딩합니다.', 2, 3);
+INSERT INTO step (content, step_order, menu_id) VALUES ('컵에 담고 기호에 따라 휘핑크림을 올립니다.', 3, 3);
 
 ALTER TABLE step ALTER COLUMN id RESTART WITH 10;

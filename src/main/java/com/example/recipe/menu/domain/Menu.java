@@ -23,5 +23,6 @@ public class Menu {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    @OrderBy("stepOrder ASC")
     List<Step> steps = new ArrayList<>();
 }

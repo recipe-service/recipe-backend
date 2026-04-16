@@ -16,27 +16,26 @@ public class StepController {
         this.stepService = stepService;
     }
 
-    // 미완성
-//    @PostMapping("/steps")
-//    Step createStep(CreateStepRequestDto createStepRequestDto){
-//        Step newStep = new Step();
-//        newStep.setContent(createStepRequestDto.getContent());
-//        newStep.setMenuId(createStepRequestDto.getMenuId());
-//
-//        return stepService.createStep(newStep);
-//    }
-
     // 공부용
 //    @GetMapping("/steps/menus/titles")
 //    List<String> getMenuTitlesOfSteps(){
 //        return stepService.getMenuTitlesOfSteps();
 //    }
 
-    // (menuId에 따른) steps 조회
+    // TODO: OrderByStepOrderAsc
+    // (menuId에 따른) Steps 조회
     // steps/menu/{menuId}
-    @GetMapping("steps/menu/{menuId}")
+    @GetMapping("/steps/menu/{menuId}")
     List<Step> getSteps(@PathVariable Long menuId){
         return stepService.getSteps(menuId);
     }
+
+    // Step 생성
+//    @PostMapping("/steps/menu/{menuId}")
+//    Step createStep(@PathVariable Long menuId, @RequestBody CreateStepRequestDto createStepRequestDto){
+//        return stepService.createStep(menuId, createStepRequestDto);
+//    }
+
+    // 순서 변경 api
 
 }

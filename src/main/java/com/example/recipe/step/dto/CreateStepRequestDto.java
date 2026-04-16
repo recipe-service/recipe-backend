@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter @Setter
 public class CreateStepRequestDto {
     String content;
-    Long menuId;
+    Integer stepOrder;
 }
