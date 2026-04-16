@@ -20,7 +20,6 @@ public class MenuController {
     }
 
     // 전체 메뉴 조회
-    //[{ id, title, description }]
     @GetMapping("/menus")
     MenusResponseDto getMenus(){
         List<Menu> menus = menuService.getMenus();
@@ -33,12 +32,13 @@ public class MenuController {
 
     // 메뉴 생성
     @PostMapping("/menus")
-    Menu createMenu(@RequestBody MenuCreateRequestDto menuCreateRequestDto) {
+    MenuResponseDto createMenu(@RequestBody MenuCreateRequestDto menuCreateRequestDto) {
         Menu requestMenu = new Menu();
         requestMenu.setTitle(menuCreateRequestDto.getTitle());
         requestMenu.setDescription(menuCreateRequestDto.getDescription());
 
-        return menuService.createMenu(requestMenu);
+        Menu resultMenu = menuService.createMenu(requestMenu);
+        return new MenuResponseDto(resultMenu.getId(), resultMenu.getTitle(), resultMenu.getDescription());
     }
 
     // 공부용
