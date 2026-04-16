@@ -13,14 +13,13 @@ public class Step {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Integer stepNumber;
+
     private String content;
 
-    @Column(nullable = false)
-    private Integer stepOrder;
-
 //    private Long menuId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "menu_id", nullable = false) // FK not null으로 지정
     Menu menu;
 }

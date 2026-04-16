@@ -1,6 +1,7 @@
 package com.example.recipe.menu.controller;
 
 import com.example.recipe.menu.domain.Menu;
+import com.example.recipe.menu.dto.DetailedMenuResponseDto;
 import com.example.recipe.menu.dto.MenuCreateRequestDto;
 import com.example.recipe.menu.dto.MenuResponseDto;
 import com.example.recipe.menu.dto.MenusResponseDto;
@@ -39,6 +40,12 @@ public class MenuController {
 
         Menu resultMenu = menuService.createMenu(requestMenu);
         return new MenuResponseDto(resultMenu.getId(), resultMenu.getTitle(), resultMenu.getDescription());
+    }
+
+    // 메뉴 상세 조회
+    @GetMapping("/menus/{id}")
+    DetailedMenuResponseDto getDetailedMenu(@PathVariable Long id){
+        return menuService.getDetailedMenu(id);
     }
 
     // 공부용

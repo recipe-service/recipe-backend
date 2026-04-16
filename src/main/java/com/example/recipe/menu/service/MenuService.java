@@ -1,11 +1,9 @@
 package com.example.recipe.menu.service;
 
 import com.example.recipe.menu.domain.Menu;
-import com.example.recipe.menu.dto.MenuCreateRequestDto;
+import com.example.recipe.menu.dto.DetailedMenuResponseDto;
 import com.example.recipe.menu.repository.MenuRepository;
-import com.example.recipe.step.domain.Step;
 import com.example.recipe.step.repository.StepRepository;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +27,20 @@ public class MenuService {
         return menuRepository.save(requestMenu);
     }
 
+    public DetailedMenuResponseDto getDetailedMenu(Long menuId){
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
+
+        // DTO로 넣기
+        DetailedMenuResponseDto responseDto = new DetailedMenuResponseDto();
+        responseDto.setId(menu.getId());
+        responseDto.setTitle(menu.getTitle());
+        responseDto.setDescription(menu.getDescription());
+        responseDto.setSteps(menu.getSteps());
+
+        return responseDto;
+    }
+
 //    public List<Step> getSteps(Long menuId){
 //        List<Step> steps = stepRepository.findAll();
 //
@@ -42,14 +54,15 @@ public class MenuService {
 //        return stepRepository.findAllByMenuId(menuId);
 //    }
 
-    public List<String> getStepContents(Long menuId){
-        // menu 가져오기
-        Menu menu = menuRepository.findById(menuId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
-
-        // menu -> steps.content 가져오기
-        return menu.getSteps().stream()
-                .map(step -> step.getContent())
-                .toList();
-    }
+    // 공부용
+//    public List<String> getStepContents(Long menuId){
+//        // menu 가져오기
+//        Menu menu = menuRepository.findById(menuId)
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
+//
+//        // menu -> steps.content 가져오기
+//        return menu.getSteps().stream()
+//                .map(step -> step.getContent())
+//                .toList();
+//    }
 }

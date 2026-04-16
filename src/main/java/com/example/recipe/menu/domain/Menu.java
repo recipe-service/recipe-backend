@@ -1,6 +1,7 @@
 package com.example.recipe.menu.domain;
 
 import com.example.recipe.step.domain.Step;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Menu {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-    @OrderBy("stepOrder ASC")
+    @JsonIgnore
+    @OrderBy("stepNumber ASC")
     List<Step> steps = new ArrayList<>();
 }
