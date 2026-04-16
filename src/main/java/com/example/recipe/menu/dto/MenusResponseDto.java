@@ -8,4 +8,8 @@ import java.util.List;
 @Getter @Setter
 public class MenusResponseDto {
     private List<MenuResponseDto> menus;
+
+    public MenusResponseDto(List<MenuResponseDto> menus) {
+        this.menus = menus;
+    }
 }

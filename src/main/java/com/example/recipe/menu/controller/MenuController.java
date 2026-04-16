@@ -2,6 +2,8 @@ package com.example.recipe.menu.controller;
 
 import com.example.recipe.menu.domain.Menu;
 import com.example.recipe.menu.dto.MenuCreateRequestDto;
+import com.example.recipe.menu.dto.MenuResponseDto;
+import com.example.recipe.menu.dto.MenusResponseDto;
 import com.example.recipe.menu.service.MenuService;
 import com.example.recipe.step.domain.Step;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,15 @@ public class MenuController {
     }
 
     // 전체 메뉴 조회
+    //[{ id, title, description }]
     @GetMapping("/menus")
-    List<Menu> getMenus(){
-        return menuService.getMenus();
+    MenusResponseDto getMenus(){
+        List<Menu> menus = menuService.getMenus();
+        // List<Menu> -> List<MenuResponseDto>
+        List<MenuResponseDto> menuDtos = menus.stream()
+                .map(menu -> new MenuResponseDto(menu.getId(), menu.getTitle(), menu.getDescription()))
+                .toList();
+        return new MenusResponseDto(menuDtos);
     }
 
     // 메뉴 생성
