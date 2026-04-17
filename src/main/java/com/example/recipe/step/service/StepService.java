@@ -3,10 +3,12 @@ package com.example.recipe.step.service;
 import com.example.recipe.menu.domain.Menu;
 import com.example.recipe.menu.repository.MenuRepository;
 import com.example.recipe.step.domain.Step;
-import com.example.recipe.step.dto.CreateStepRequestDto;
+import com.example.recipe.step.dto.StepRequestDto;
+import com.example.recipe.step.dto.StepResponseDto;
 import com.example.recipe.step.repository.StepRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -34,20 +36,24 @@ public class StepService {
         return stepRepository.findAllByMenuId(menuId);
     }
 
-    // TODO: Reordering 전용 메서드 만들기
-//    public Step createStep(Long menuId, CreateStepRequestDto createStepRequestDto){
-//        Menu menu = menuRepository.findById(menuId)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
-//
-//        // "밀어내기" 로직
-//        // (중복/초과 stepOrder 존재 -> 나머지 뒤로 밀리기)
-//        stepRepository.updateStepOrders(menuId, createStepRequestDto.getStepOrder());
-//
-//        Step newStep = new Step();
-//        newStep.setContent(createStepRequestDto.getContent());
-//        newStep.setStepOrder(createStepRequestDto.getStepOrder());
-//        newStep.setMenu(menu);
-//
-//        return stepRepository.save(newStep);
-//    }
+    @Transactional
+    public List<StepResponseDto> updateSteps(Long menuId, List<StepRequestDto> requestDtos){
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
+
+        // 동일 menuId에 해당하는 steps 전부 지우기
+        stepRepository.deleteAllByMenuId(menuId);
+
+        List<Step> requestSteps = requestDtos.stream().map(stepRequestDto ->
+                new Step(
+                        stepRequestDto.getStepNumber(),
+                        stepRequestDto.getContent(),
+                        menu
+                )).toList();
+
+        List<Step> responseSteps = stepRepository.saveAll(requestSteps);
+        return responseSteps.stream().map(step ->
+                new StepResponseDto(step.getId(), step.getStepNumber(), step.getContent())
+        ).toList();
+    }
 }

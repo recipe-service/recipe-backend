@@ -22,13 +22,12 @@ public class MenuController {
 
     // 전체 메뉴 조회
     @GetMapping("/menus")
-    MenusResponseDto getMenus(){
+    List<MenuResponseDto> getMenus(){
         List<Menu> menus = menuService.getMenus();
-        // List<Menu> -> List<MenuResponseDto>
-        List<MenuResponseDto> menuDtos = menus.stream()
+
+        return menus.stream()
                 .map(menu -> new MenuResponseDto(menu.getId(), menu.getTitle(), menu.getDescription()))
                 .toList();
-        return new MenusResponseDto(menuDtos);
     }
 
     // 메뉴 생성

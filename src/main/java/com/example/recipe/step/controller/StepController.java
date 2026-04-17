@@ -1,7 +1,9 @@
 package com.example.recipe.step.controller;
 
+import com.example.recipe.menu.dto.MenuResponseDto;
 import com.example.recipe.step.domain.Step;
-import com.example.recipe.step.dto.CreateStepRequestDto;
+import com.example.recipe.step.dto.StepRequestDto;
+import com.example.recipe.step.dto.StepResponseDto;
 import com.example.recipe.step.service.StepService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +32,10 @@ public class StepController {
         return stepService.getSteps(menuId);
     }
 
-    // Step 생성
-//    @PostMapping("/steps/menu/{menuId}")
-//    Step createStep(@PathVariable Long menuId, @RequestBody CreateStepRequestDto createStepRequestDto){
-//        return stepService.createStep(menuId, createStepRequestDto);
-//    }
-
-    // 순서 변경 api
+    // 전체 Steps 수정 (생성, 순서 이동, 수정, 삭제)
+    @PutMapping("/steps/menu/{menuId}")
+    List<StepResponseDto> updateSteps(@PathVariable Long menuId, @RequestBody List<StepRequestDto> requestDtos){
+        return stepService.updateSteps(menuId, requestDtos);
+    }
 
 }

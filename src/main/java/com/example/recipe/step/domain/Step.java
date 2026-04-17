@@ -3,9 +3,12 @@ package com.example.recipe.step.domain;
 import com.example.recipe.menu.domain.Menu;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Entity
 @Getter @Setter
 public class Step {
@@ -20,6 +23,13 @@ public class Step {
 
 //    private Long menuId;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "menu_id", nullable = false) // FK not null으로 지정
     Menu menu;
+
+    public Step(Integer stepNumber, String content, Menu menu) {
+        this.stepNumber = stepNumber;
+        this.content = content;
+        this.menu = menu;
+    }
 }
