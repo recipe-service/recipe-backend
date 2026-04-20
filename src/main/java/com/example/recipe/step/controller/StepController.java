@@ -18,24 +18,9 @@ public class StepController {
         this.stepService = stepService;
     }
 
-    // 공부용
-//    @GetMapping("/steps/menus/titles")
-//    List<String> getMenuTitlesOfSteps(){
-//        return stepService.getMenuTitlesOfSteps();
-//    }
-
-    // TODO: OrderByStepOrderAsc
-    // (menuId에 따른) Steps 조회
-    // steps/menu/{menuId}
-    @GetMapping("/steps/menu/{menuId}")
-    List<Step> getSteps(@PathVariable Long menuId){
-        return stepService.getSteps(menuId);
-    }
-
     // 전체 Steps 수정 (생성, 순서 이동, 수정, 삭제)
     @PutMapping("/steps/menu/{menuId}")
     List<StepResponseDto> updateSteps(@PathVariable Long menuId, @RequestBody List<StepRequestDto> requestDtos){
         return stepService.updateSteps(menuId, requestDtos);
     }
-
 }

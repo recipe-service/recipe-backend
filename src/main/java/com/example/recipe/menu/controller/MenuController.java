@@ -4,9 +4,7 @@ import com.example.recipe.menu.domain.Menu;
 import com.example.recipe.menu.dto.DetailedMenuResponseDto;
 import com.example.recipe.menu.dto.MenuCreateRequestDto;
 import com.example.recipe.menu.dto.MenuResponseDto;
-import com.example.recipe.menu.dto.MenusResponseDto;
 import com.example.recipe.menu.service.MenuService;
-import com.example.recipe.step.domain.Step;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,22 +21,13 @@ public class MenuController {
     // 전체 메뉴 조회
     @GetMapping("/menus")
     List<MenuResponseDto> getMenus(){
-        List<Menu> menus = menuService.getMenus();
-
-        return menus.stream()
-                .map(menu -> new MenuResponseDto(menu.getId(), menu.getTitle(), menu.getDescription()))
-                .toList();
+        return menuService.getMenus();
     }
 
     // 메뉴 생성
     @PostMapping("/menus")
-    MenuResponseDto createMenu(@RequestBody MenuCreateRequestDto menuCreateRequestDto) {
-        Menu requestMenu = new Menu();
-        requestMenu.setTitle(menuCreateRequestDto.getTitle());
-        requestMenu.setDescription(menuCreateRequestDto.getDescription());
-
-        Menu resultMenu = menuService.createMenu(requestMenu);
-        return new MenuResponseDto(resultMenu.getId(), resultMenu.getTitle(), resultMenu.getDescription());
+    MenuResponseDto createMenu(@RequestBody MenuCreateRequestDto requestDto) {
+        return menuService.createMenu(requestDto);
     }
 
     // 메뉴 상세 조회
@@ -46,13 +35,6 @@ public class MenuController {
     DetailedMenuResponseDto getDetailedMenu(@PathVariable Long id){
         return menuService.getDetailedMenu(id);
     }
-
-    // 공부용
-    // (menuId를 넣으면) 각 step의 content을 리스트로 조회
-//    @GetMapping("/menus/{menuId}/steps/contents")
-//    List<String> getStepContents(@PathVariable Long menuId){
-//        return menuService.getStepContents(menuId);
-//    }
 }
 
 

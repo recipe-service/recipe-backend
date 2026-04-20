@@ -2,6 +2,8 @@ package com.example.recipe.menu.service;
 
 import com.example.recipe.menu.domain.Menu;
 import com.example.recipe.menu.dto.DetailedMenuResponseDto;
+import com.example.recipe.menu.dto.MenuCreateRequestDto;
+import com.example.recipe.menu.dto.MenuResponseDto;
 import com.example.recipe.menu.repository.MenuRepository;
 import com.example.recipe.step.repository.StepRepository;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,21 @@ public class MenuService {
         this.stepRepository = stepRepository;
     }
 
-    public List<Menu> getMenus() {
-        return menuRepository.findAll();
+    public List<MenuResponseDto> getMenus() {
+        List<Menu> menus = menuRepository.findAll();
+
+        return menus.stream().map(menu ->
+                new MenuResponseDto(menu.getId(), menu.getTitle(), menu.getDescription())
+        ).toList();
     }
 
-    public Menu createMenu(Menu requestMenu) {
+    public MenuResponseDto createMenu(MenuCreateRequestDto requestDto) {
+        Menu requestMenu = new Menu();
+        requestMenu.setTitle(requestDto.getTitle());
+        requestMenu.setDescription(requestDto.getDescription());
 
-        return menuRepository.save(requestMenu);
+        Menu responseMenu = menuRepository.save(requestMenu);
+        return new MenuResponseDto(responseMenu.getId(), responseMenu.getTitle(), responseMenu.getDescription());
     }
 
     public DetailedMenuResponseDto getDetailedMenu(Long menuId){
@@ -40,29 +50,4 @@ public class MenuService {
 
         return responseDto;
     }
-
-//    public List<Step> getSteps(Long menuId){
-//        List<Step> steps = stepRepository.findAll();
-//
-//        return steps.stream()
-//                .filter(step -> step.getMenuId().equals(menuId))
-//                .toList();
-//    }
-
-    // 리팩토링
-//    public List<Step> getStepsV2(Long menuId) {
-//        return stepRepository.findAllByMenuId(menuId);
-//    }
-
-    // 공부용
-//    public List<String> getStepContents(Long menuId){
-//        // menu 가져오기
-//        Menu menu = menuRepository.findById(menuId)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
-//
-//        // menu -> steps.content 가져오기
-//        return menu.getSteps().stream()
-//                .map(step -> step.getContent())
-//                .toList();
-//    }
 }
